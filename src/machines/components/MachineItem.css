@@ -1,0 +1,57 @@
+.machine-item {
+    margin: 1rem 0;
+}
+
+.machine-item__content {
+    padding: 0;
+}
+
+.machine-item__info {
+    padding: 1rem;
+    text-align: center;
+}
+
+.machine-item__image {
+    width: 100%;
+    height: 12.5rem;
+    margin-right: 1.5rem;
+}
+
+.machine-item__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.machine-item__info h2,
+.machine-item__info h3,
+.machine-item__info p {
+    margin: 0 0 0.5rem 0;
+}
+
+.machine-item__actions {
+    padding: 1rem;
+    text-align: center;
+    border-top: 1px solid #ccc;
+}
+
+.machine-item__modal-content {
+    padding: 0;
+}
+
+.machine-item__modal-actions {
+    text-align: right;
+}
+
+.machine-item__actions button,
+.machine-item__actions a {
+    margin: 0.5rem;
+}
+
+
+
+@media (min-width: 768px) {
+    .machine-item__image {
+        height: 20rem;
+    }
+}
