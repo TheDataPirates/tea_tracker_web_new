@@ -18,10 +18,10 @@ const Map = props => {
 
   return (
     <div
-      ref={mapRef}
-      className={`map ${props.className}`}
-      style={props.style}
-    ></div>
+    ref={mapRef}
+    className={`map ${props.className}`}
+    style={props.style}
+    />
   );
 };
 
