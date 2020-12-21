@@ -1,60 +1,34 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState, useContext } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
 
 import Input from '../../shared/components/FormElements/Input';
 import Button from '../../shared/components/FormElements/Button';
 import Card from '../../shared/components/UIElements/Card';
+import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
+import ErrorModal from '../../shared/components/UIElements/ErrorModal';
 import {
     VALIDATOR_REQUIRE,
     VALIDATOR_MINLENGTH
 } from '../../shared/util/validators';
 import { useForm } from '../../shared/hooks/form-hook';
+import { useHttpClient } from '../../shared/hooks/http-hook';
+import { AuthContext } from '../../shared/context/auth-context';
 import './UserForm.css';
 
-const DUMMY_PLACES = [
-    {
-        id: 'p1',
-        fname: 'Empire State Building',
-        lname: 'One of the most famous sky scrapers in the world!',
-        imageUrl:
-            'https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/NYC_Empire_State_Building.jpg/640px-NYC_Empire_State_Building.jpg',
-        dob: '20 W 34th St, New York, NY 10001',
-        location: {
-            lat: 40.7484405,
-            lng: -73.9878584
-        },
-        user_type: 'u1'
-    },
-    {
-        id: 'p2',
-        fname: 'Emp. State Building',
-        lname: 'One of the most famous sky scrapers in the world!',
-        imageUrl:
-            'https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/NYC_Empire_State_Building.jpg/640px-NYC_Empire_State_Building.jpg',
-        dob: '20 W 34th St, New York, NY 10001',
-        location: {
-            lat: 40.7484405,
-            lng: -73.9878584
-        },
-        user_type: 'u2'
-    }
-];
-
 const UpdateUser = () => {
-    const [isLoading, setIsLoading] = useState(true);
+    const auth = useContext(AuthContext);
+    const { isLoading, error, sendRequest, clearError } = useHttpClient();
+    const [loadedUser, setLoadedUser] = useState();
     const userId = useParams().userId;
+    const history = useHistory();
 
     const [formState, inputHandler, setFormData] = useForm(
         {
-            id: {
+            user_id: {
                 value: '',
                 isValid: false
             },
-            fname: {
-                value: '',
-                isValid: false
-            },
-            lname: {
+            name: {
                 value: '',
                 isValid: false
             },
@@ -62,6 +36,7 @@ const UpdateUser = () => {
                 value: '',
                 isValid: false
             },
+
             dob: {
                 value: '',
                 isValid: false
@@ -70,141 +45,215 @@ const UpdateUser = () => {
                 value: '',
                 isValid: false
             },
+            telephone_no: {
+                value: '',
+                isValid: false
+            },
+            nic:{
+                value:'',
+                isValid:false
+            },
+            address:{
+                value:'',
+                isValid:false
+            }
 
         },
         false
     );
 
-    const identifiedUser = DUMMY_PLACES.find(p => p.id === userId);
-
     useEffect(() => {
-        if (identifiedUser) {
-            setFormData(
-                {
-                    id: {
-                        value: identifiedUser.id,
-                        isValid: false
-                    },
-                    fname: {
-                        value: identifiedUser.fname,
-                        isValid: false
-                    },
-                    lname: {
-                        value: identifiedUser.lname,
-                        isValid: false
-                    },
-                    password: {
-                        value: '',
-                        isValid: false
-                    },
-                    dob: {
-                        value: identifiedUser.dob,
-                        isValid: false
-                    },
-                    user_type: {
-                        value: identifiedUser.user_type,
-                        isValid: false
-                    },
+        const fetchUsers = async () => {
+            try {
+                const responseData = await sendRequest(
+                    `http://localhost:8080/auth/users/${userId}`
+                );
+                // console.log(responseData.user[0].user_id);
+                setLoadedUser(responseData.user[0]);
+                setFormData(
+                    {
+                        user_id: {
+                            value: responseData.user[0].user_id,
+                            isValid: true
+                        },
+                        name: {
+                            value: responseData.user[0].name,
+                            isValid: true
+                        },
 
-                },
-                true
-            );
-        }
-        setIsLoading(false);
-    }, [setFormData, identifiedUser]);
+                        dob: {
+                            value: responseData.user[0].dob,
+                            isValid: true
+                        },
+                        user_type: {
+                            value: responseData.user[0].user_type,
+                            isValid: true
+                        },
+                        telephone_no: {
+                            value: responseData.user[0].telephone_no,
+                            isValid: true
+                        },
+                        nic:{
+                            value:responseData.user[0].nic,
+                            isValid:true
+                        },
+                        address:{
+                            value:responseData.user[0].address,
+                            isValid:true
+                        }
 
-    const userUpdateSubmitHandler = event => {
+                    },
+                    true
+                );
+            } catch (err) {}
+        };
+        fetchUsers();
+
+    }, [sendRequest, userId, setFormData]);
+
+    const userUpdateSubmitHandler = async event => {
         event.preventDefault();
-        console.log(formState.inputs);
+        try {
+            await sendRequest(
+                'http://localhost:8080/auth/users',
+                'PATCH',
+                JSON.stringify({
+                    user_id: formState.inputs.user_id.value,
+                    password:formState.inputs.password.value,
+                    name: formState.inputs.name.value,
+                    dob:formState.inputs.dob.value,
+                    user_type:formState.inputs.user_type.value,
+                    telephone_no:formState.inputs.telephone_no.value,
+                    nic:formState.inputs.nic.value,
+                    address:formState.inputs.address.value,
+                }),
+                {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + auth.token
+                }
+            );
+            console.log('pressed');
+            history.push('/users');
+        } catch (err) {}
     };
 
-    if (!identifiedUser) {
+    if (isLoading) {
+        return (
+            <div className="center">
+                <LoadingSpinner />
+            </div>
+        );
+    }
+
+    if (!loadedUser && !error) {
         return (
             <div className="center">
                 <Card>
-                    <h2>Could not find place!</h2>
+                    <h2>Could not find user!</h2>
                 </Card>
             </div>
         );
     }
 
-    if (isLoading) {
-        return (
-            <div className="center">
-                <h2>Loading...</h2>
-            </div>
-        );
-    }
-
     return (
-        <form className="place-form" onSubmit={userUpdateSubmitHandler}>
-            <Input
-                id="id"
-                element="input"
-                type="text"
-                label="User_id"
-                validators={[VALIDATOR_REQUIRE()]}
-                errorText="Please enter a valid ID."
-                onInput={inputHandler}
-                initialValue = {formState.input.id.value}
-                initialValid = {formState.input.id.isValid}
+        <React.Fragment>
+            <ErrorModal error={error} onClear={clearError} />
+            {!isLoading && loadedUser && (
+                <form className="user-form" onSubmit={userUpdateSubmitHandler}>
+                    <Input
+                        id="id"
+                        element="input"
+                        type="text"
+                        label="User ID"
+                        validators={[VALIDATOR_REQUIRE()]}
+                        errorText="Please enter a valid ID."
+                        onInput={inputHandler}
+                        initialValue={loadedUser.user_id}
+                        initialValid={true}
+                    />
 
-            />
-            <Input
-                id="fname"
-                element="input"
-                label="First Name"
-                validators={[VALIDATOR_REQUIRE()]}
-                errorText="Please enter a valid name."
-                onInput={inputHandler}
-                initialValue = {formState.input.fname.value}
-                initialValid = {formState.input.fname.isValid}
-            />
-            <Input
-                id="lname"
-                element="input"
-                label="Last Name"
-                validators={[VALIDATOR_REQUIRE()]}
-                errorText="Please enter a valid name."
-                onInput={inputHandler}
-                initialValue = {formState.input.lname.value}
-                initialValid = {formState.input.lname.isValid}
-            />
-            <Input
-                id="password"
-                element="input"
-                label="password"
-                validators={[VALIDATOR_REQUIRE()]}
-                errorText="Please enter a valid password."
-                onInput={inputHandler}
-                initialValue = {formState.input.password.value}
-                initialValid = {formState.input.password.isValid}
-            />
-            <Input
-                id="dob"
-                element="input"
-                label="D.O.B"
-                validators={[VALIDATOR_REQUIRE()]}
-                errorText="Please enter a valid dob."
-                onInput={inputHandler}
-                initialValue = {formState.input.dob.value}
-                initialValid = {formState.input.dob.isValid}
-            />
-            <Input
-                id="user_type"
-                element="input"
-                label="User type"
-                validators={[VALIDATOR_REQUIRE()]}
-                errorText="Please enter a valid user type."
-                onInput={inputHandler}
-                initialValue = {formState.input.user_type.value}
-                initialValid = {formState.input.user_type.isValid}
-            />
+                    <Input
+                        id="name"
+                        element="input"
+                        label="Name"
+                        type="text"
+                        validators={[VALIDATOR_REQUIRE()]}
+                        errorText="Please enter a valid name."
+                        onInput={inputHandler}
+                        initialValue={loadedUser.name}
+                        initialValid={true}
+                    />
+                    <Input
+                        element="input"
+                        id="password"
+                        type="password"
+                        label="Password"
+                        validators={[VALIDATOR_MINLENGTH(4)]}
+                        errorText="Please enter a valid password, at least 4 characters."
+                        onInput={inputHandler}
+                        initialValid={false}
+                    />
 
-            <Button type="submit" disabled={!formState.isValid}>
-                UPDATE USER
-            </Button>
-        </form>
+                    <Input
+                        id="dob"
+                        element="input"
+                        label="D.O.B"
+                        type="text"
+                        validators={[VALIDATOR_REQUIRE()]}
+                        errorText="Please enter a valid Birth."
+                        onInput={inputHandler}
+                        initialValue={loadedUser.dob}
+                        initialValid={true}
+                    />
+                    <Input
+                        id="user_type"
+                        element="input"
+                        label="User Type"
+                        type="text"
+                        validators={[VALIDATOR_REQUIRE()]}
+                        errorText="Please enter a valid User Type."
+                        onInput={inputHandler}
+                        initialValue={loadedUser.user_type}
+                        initialValid={true}
+                    />
+                    <Input
+                        id="telephone_no"
+                        element="input"
+                        label="Telephone Number"
+                        type="text"
+                        validators={[VALIDATOR_REQUIRE()]}
+                        errorText="Please enter a valid user Telephone Number."
+                        onInput={inputHandler}
+                        initialValue={loadedUser.telephone_no}
+                        initialValid={true}
+                    />
+                    <Input
+                        id="nic"
+                        element="input"
+                        label="NIC"
+                        type="text"
+                        validators={[VALIDATOR_REQUIRE()]}
+                        errorText="Please enter a valid user NIC."
+                        onInput={inputHandler}
+                        initialValue={loadedUser.nic}
+                        initialValid={true}
+                    />
+                    <Input
+                        id="address"
+                        element="textarea"
+                        label="Address"
+                        validators={[VALIDATOR_MINLENGTH(5)]}
+                        errorText="Please enter a valid description (at least 5 characters)."
+                        onInput={inputHandler}
+                        initialValue={loadedUser.address}
+                        initialValid={true}
+                    />
+                    <Button type="submit" disabled={!formState.isValid}>
+                        UPDATE USER
+                    </Button>
+                </form>
+            )}
+        </React.Fragment>
     );
 };
 

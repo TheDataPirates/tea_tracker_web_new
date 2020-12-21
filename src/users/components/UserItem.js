@@ -1,29 +1,50 @@
-import React, {useState} from 'react';
+import React, {useState,useContext} from 'react';
 
 import Avatar from '../../shared/components/UIElements/Avatar';
 import Card from '../../shared/components/UIElements/Card';
 import Button from "../../shared/components/FormElements/Button";
 import Modal from '../../shared/components/UIElements/Modal';
+import { useHttpClient } from '../../shared/hooks/http-hook';
+import { AuthContext } from '../../shared/context/auth-context';
+
 
 import './UserItem.css';
+import ErrorModal from "../../shared/components/UIElements/ErrorModal";
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 
 const UserItem = props => {
+    const { isLoading, error, sendRequest, clearError } = useHttpClient();
+    const auth = useContext(AuthContext);
+
+
     const [showConfirmModal, setShowConfirmModal] = useState(false);
-    const showDeleteWarningHandler = () => {
+    const showDeleteWarningHandler =  () => {
         setShowConfirmModal(true);
+
     };
 
     const cancelDeleteHandler = () => {
         setShowConfirmModal(false);
     };
 
-    const confirmDeleteHandler = () => {
+    const confirmDeleteHandler = async () => {
         setShowConfirmModal(false);
-        console.log('DELETING...');
+        try {
+            await sendRequest(
+                `http://localhost:8080/auth/users/${props.id}`,
+                'DELETE',
+                null,
+                {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + auth.token
+                }
+            );
+            props.onDelete(props.id);
+        } catch (err) {}
     };
     return (
         <React.Fragment>
-
+            <ErrorModal error={error} onClear={clearError} />
             <Modal
                 show={showConfirmModal}
                 onCancel={cancelDeleteHandler}
@@ -48,23 +69,23 @@ const UserItem = props => {
 
             <li className="user-item">
                 <Card className="user-item__content">
-                        <div className="user-item__image">
-                            <Avatar image={props.image} alt={props.name} />
-                        </div>
-                        <div className="user-item__info">
-                            <h2>{props.name}</h2>
-                            <h3>user ID: {props.id}</h3>
-                            <h3>NIC: {props.nic}</h3>
-                            <h3>TELEPHONE NO: {props.telephone_no}</h3>
-                            <h1>USER TYPE: {props.user_type}</h1>
-                        </div>
+                    {isLoading && <LoadingSpinner asOverlay />}
+                    <div className="user-item__image">
+                        {props.image ? <Avatar image={`http://localhost:8080/${props.image}`} alt={props.name}/> :
+                            <Avatar image={props.image} alt={props.name}/>}
+                    </div>
+                    <div className="user-item__info">
+                        <h2>{props.name}</h2>
+                        <h3>user ID: {props.id}</h3>
+                        <h3>NIC: {props.nic}</h3>
+                        <h3>TELEPHONE NO: {props.telephone_no}</h3>
+                        <h1>USER TYPE: {props.user_type}</h1>
+                    </div>
                     <div className="user-item__actions">
-
-
-                            <Button to={`/users/${props.id}`}>EDIT</Button>
-                            <Button danger onClick={showDeleteWarningHandler}>
-                                DELETE
-                            </Button>
+                        <Button to={`/users/${props.id}`}>EDIT</Button>
+                        <Button danger onClick={showDeleteWarningHandler}>
+                            DELETE
+                        </Button>
 
                     </div>
                 </Card>

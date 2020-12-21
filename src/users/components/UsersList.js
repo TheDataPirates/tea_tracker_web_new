@@ -26,7 +26,7 @@ const UsersList = props => {
           nic={user.nic}
           telephone_no={user.telephone_no}
           user_type={user.user_type}
-
+          onDelete={props.onDeleteUser}
         />
       ))}
     </ul>
