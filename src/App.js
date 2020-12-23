@@ -15,7 +15,7 @@ import Auth from './dashboard/pages/Auth';
 import MainNavigation from './shared/components/Navigation/MainNavigation';
 
 
-import { AuthContext } from './shared/context/auth-context';
+import {AuthContext} from './shared/context/auth-context';
 import {useAuth} from "./shared/hooks/auth-hook";
 import Suppliers from "./suppliers/pages/Suppliers";
 import NewSupplier from "./suppliers/pages/NewSupplier";
@@ -23,10 +23,10 @@ import UpdateSupplier from "./suppliers/pages/UpdateSupplier";
 import Machines from "./machines/pages/Machines";
 import NewMachine from "./machines/pages/NewMachine";
 import UpdateMachine from "./machines/pages/UpdateMachine";
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App = () => {
-    const { token, login, logout, userId } = useAuth();
+    const {token, login, logout, userId} = useAuth();
 
 
     let routes;
@@ -35,19 +35,19 @@ const App = () => {
         routes = (
             <Switch>
                 <Route path="/" exact>
-                    <Dashboard />
+                    <Dashboard/>
                 </Route>
                 <Route path="/reports" exact>
-                    <Reports />
+                    <Reports/>
                 </Route>
                 <Route path="/users/new" exact>
                     <NewUser/>
                 </Route>
                 <Route path="/users" exact>
-                    <Users />
+                    <Users/>
                 </Route>
-                <Route path="/users/:userId" >
-                    <UpdateUser />
+                <Route path="/users/:userId">
+                    <UpdateUser/>
                 </Route>
 
                 <Route path="/suppliers" exact>
@@ -69,7 +69,7 @@ const App = () => {
                 <Route path="/machines/:machId">
                     <UpdateMachine/>
                 </Route>
-                <Redirect to="/" />
+                <Redirect to="/"/>
             </Switch>
         );
     } else {
@@ -77,9 +77,9 @@ const App = () => {
             <Switch>
 
                 <Route path="/auth">
-                    <Auth />
+                    <Auth/>
                 </Route>
-                <Redirect to="/auth" />
+                <Redirect to="/auth"/>
             </Switch>
         );
     }
@@ -96,7 +96,6 @@ const App = () => {
         >
             <Router>
                 <MainNavigation />
-
                 <main>{routes}</main>
             </Router>
         </AuthContext.Provider>

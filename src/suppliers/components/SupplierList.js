@@ -2,7 +2,7 @@ import React from 'react';
 
 import SupplierItem from './SupplierItem';
 import Card from '../../shared/components/UIElements/Card';
-import './SupplierList.css';
+import {Container, Row} from "react-bootstrap";
 
 const SuppliersList = props => {
     if (props.items.length === 0) {
@@ -16,16 +16,21 @@ const SuppliersList = props => {
     }
 
     return (
-        <ul className="supplier-list">
-            {props.items.map(user => (
-                <SupplierItem
-                    key={user.id}
-                    id={user.id}
-                    name={user.name}
-
-                />
-            ))}
-        </ul>
+        <Container>
+            <Row>
+                {props.items.map(supp => (
+                    <SupplierItem
+                        key={supp.supplier_id}
+                        id={supp.supplier_id}
+                        name={supp.name}
+                        type={supp.type}
+                        telephone_no={supp.telephone_no}
+                        address={supp.address}
+                        status={supp.status}
+                    />
+                ))}
+            </Row>
+        </Container>
     );
 };
 

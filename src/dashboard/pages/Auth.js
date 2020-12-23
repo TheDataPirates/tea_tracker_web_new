@@ -37,7 +37,6 @@ const Auth = () => {
 
     const authSubmitHandler = async event => {
         event.preventDefault();
-        console.log(formState.inputs);
         try {
             const responseData = await sendRequest(
                 'http://localhost:8080/auth/login',
@@ -51,11 +50,13 @@ const Auth = () => {
                 }
             );
             auth.login(responseData.userId, responseData.token);
+
         } catch (err) {
         }
     };
 
     return (
+
         <React.Fragment>
             <ErrorModal error={error} onClear={clearError}/>
             <Card className="authentication">
@@ -63,7 +64,6 @@ const Auth = () => {
                 <h2>Login Required</h2>
                 <hr/>
                 <form onSubmit={authSubmitHandler}>
-
                     <Input
                         element="input"
                         id="user_id"

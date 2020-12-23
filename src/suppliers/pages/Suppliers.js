@@ -1,18 +1,46 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import SuppliersList from "../components/SupplierList";
+import {useHttpClient} from "../../shared/hooks/http-hook";
+import ErrorModal from "../../shared/components/UIElements/ErrorModal";
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 
 const Suppliers = () => {
-    const USERS = [
-        {
-            id: 'u1',
-            name: 'Max Schwarz',
-            image:
-                'https://images.pexels.com/photos/839011/pexels-photo-839011.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
-            places: 3
-        }
-    ];
+    const { isLoading, error, sendRequest, clearError } = useHttpClient();
+    const [loadedSuppliers, setLoadedSuppliers] = useState();
 
-    return <SuppliersList items={USERS} />;
+    useEffect(() => {
+        const fetchSuppliers = async () => {
+            try {
+                const responseData = await sendRequest(
+                    'http://localhost:8080/supp/suppliers'
+                );
+
+                setLoadedSuppliers(responseData.suppliers);
+                console.log(responseData.suppliers);
+            } catch (err) {}
+        };
+        fetchSuppliers();
+    }, [sendRequest]);
+
+
+    const userDeletedHandler = deletedSupplierId => {
+        setLoadedSuppliers(prevUsers =>
+            prevUsers.filter(supp => supp.supp_id !== deletedSupplierId)
+        );
+    };
+
+
+    return(
+        <React.Fragment>
+            <ErrorModal error={error} onClear={clearError} />
+            {isLoading && (
+                <div className="center">
+                    <LoadingSpinner />
+                </div>
+            )}
+            {!isLoading && loadedSuppliers &&  <SuppliersList items={loadedSuppliers}  onDeleteUser={userDeletedHandler} />}
+        </React.Fragment>
+    )
 };
 
 export default Suppliers;
