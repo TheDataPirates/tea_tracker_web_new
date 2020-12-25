@@ -68,7 +68,7 @@ const UpdateUser = () => {
                 const responseData = await sendRequest(
                     `http://localhost:8080/auth/users/${userId}`
                 );
-                // console.log(responseData.user[0].user_id);
+                console.log(responseData.user[0].user_id);
                 setLoadedUser(responseData.user[0]);
                 setFormData(
                     {

@@ -11,7 +11,8 @@ import {AuthContext} from '../../shared/context/auth-context';
 import './UserItem.css';
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
-import {Col} from "react-bootstrap";
+
+import Grid from "@material-ui/core/Grid";
 
 const UserItem = props => {
     const {isLoading, error, sendRequest, clearError} = useHttpClient();
@@ -68,7 +69,7 @@ const UserItem = props => {
                     can't be undone thereafter.
                 </p>
             </Modal>
-            <Col xs={12} md={4}>
+            <Grid item xs={12} sm={6} md={3}>
                 <div className="user-item">
                     <Card className="user-item__content">
                         {isLoading && <LoadingSpinner asOverlay/>}
@@ -92,8 +93,7 @@ const UserItem = props => {
                         </div>
                     </Card>
                 </div>
-            </Col>
-
+            </Grid>
         </React.Fragment>
     );
 };

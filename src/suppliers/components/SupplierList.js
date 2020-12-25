@@ -2,7 +2,7 @@ import React from 'react';
 
 import SupplierItem from './SupplierItem';
 import Card from '../../shared/components/UIElements/Card';
-import {Container, Row} from "react-bootstrap";
+import Grid from "@material-ui/core/Grid";
 
 const SuppliersList = props => {
     if (props.items.length === 0) {
@@ -16,8 +16,7 @@ const SuppliersList = props => {
     }
 
     return (
-        <Container>
-            <Row>
+        <Grid container spacing={3} >
                 {props.items.map(supp => (
                     <SupplierItem
                         key={supp.supplier_id}
@@ -29,8 +28,7 @@ const SuppliersList = props => {
                         status={supp.status}
                     />
                 ))}
-            </Row>
-        </Container>
+        </Grid>
     );
 };
 

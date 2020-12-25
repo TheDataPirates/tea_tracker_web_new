@@ -1,12 +1,18 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 
 import Card from '../../shared/components/UIElements/Card';
 import './SupplierItem.css';
 import Button from "../../shared/components/FormElements/Button";
 import Modal from "../../shared/components/UIElements/Modal";
-import {Col} from "react-bootstrap";
+import Grid from "@material-ui/core/Grid";
+import {useHttpClient} from "../../shared/hooks/http-hook";
+import {AuthContext} from "../../shared/context/auth-context";
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
+import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 
 const SupplierItem = props => {
+    const auth = useContext(AuthContext);
+    const {isLoading, error, sendRequest, clearError} = useHttpClient();
     const [showConfirmModal, setShowConfirmModal] = useState(false);
     const showDeleteWarningHandler = () => {
         setShowConfirmModal(true);
@@ -16,12 +22,26 @@ const SupplierItem = props => {
         setShowConfirmModal(false);
     };
 
-    const confirmDeleteHandler = () => {
+    const confirmDeleteHandler = async () => {
+
         setShowConfirmModal(false);
-        console.log('DELETING...');
+        try {
+            await sendRequest(
+                `http://localhost:8080/supp/supplier/${props.id}`,
+                'DELETE',
+                null,
+                {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + auth.token
+                }
+            );
+            props.onDelete(props.id);
+        } catch (err) {
+        }
     };
     return (
         <React.Fragment>
+            <ErrorModal error={error} onClear={clearError}/>
             <Modal
                 show={showConfirmModal}
                 onCancel={cancelDeleteHandler}
@@ -39,13 +59,14 @@ const SupplierItem = props => {
                 }
             >
                 <p>
-                    Do you want to proceed and delete this user? Please note that it
+                    Do you want to proceed and delete this supplier? Please note that it
                     can't be undone thereafter.
                 </p>
             </Modal>
-            <Col xs={12} md={4}>
+            <Grid item xs={12} sm={6} md={3}>
                 <div className="supplier-item">
                     <Card className="supplier-item__content">
+                        {isLoading && <LoadingSpinner asOverlay/>}
                         <div className="supplier-item__info">
                             <h1>ID :{props.id}</h1>
                             <h2>{props.name}</h2>
@@ -65,7 +86,7 @@ const SupplierItem = props => {
 
                     </Card>
                 </div>
-            </Col>
+            </Grid>
         </React.Fragment>
     );
 };

@@ -2,10 +2,13 @@ import React from 'react';
 
 import UserItem from './UserItem';
 import Card from '../../shared/components/UIElements/Card';
-import  {Container,Row} from "react-bootstrap";
+import Grid from '@material-ui/core/Grid';
+
 import './UsersList.css';
 
+
 const UsersList = props => {
+
     if (props.items.length === 0) {
         return (
             <div className="center">
@@ -17,8 +20,9 @@ const UsersList = props => {
     }
 
     return (
-        <Container>
-            <Row>
+        // <div className={classes.root}>
+        <Grid container spacing={3} >
+
                 {props.items.map(user => (
                     <UserItem
                         key={user.user_id}
@@ -31,8 +35,8 @@ const UsersList = props => {
                         onDelete={props.onDeleteUser}
                     />
                 ))}
-            </Row>
-        </Container>
+        </Grid>
+        // </div>
     );
 };
 

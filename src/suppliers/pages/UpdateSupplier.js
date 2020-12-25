@@ -25,7 +25,7 @@ const UpdateSupplier = () => {
 
     const [formState, inputHandler, setFormData] = useForm(
         {
-            id: {
+            supplier_id: {
                 value: '',
                 isValid: false
             },
@@ -61,11 +61,12 @@ const UpdateSupplier = () => {
                 const responseData = await sendRequest(
                     `http://localhost:8080/supp/suppliers/${suppId}`
                 );
-                // console.log(responseData.user[0].user_id);
+                console.log(responseData.supplier);
+
                 setLoadedSupplier(responseData.supplier[0]);
                 setFormData(
                     {
-                        id: {
+                        supplier_id: {
                             value: responseData.supplier[0].supplier_id,
                             isValid: true
                         },
@@ -99,16 +100,16 @@ const UpdateSupplier = () => {
         };
         fetchSupplier();
 
-    }, [sendRequest, setFormData]);
+    }, [sendRequest, setFormData,suppId]);
 
     const placeUpdateSubmitHandler = async event => {
         event.preventDefault();
         try {
             await sendRequest(
-                'http://localhost:8080/auth/users',
+                'http://localhost:8080/supp/suppliers',
                 'PATCH',
                 JSON.stringify({
-                    supplier_id: formState.inputs.id.value,
+                    supplier_id: formState.inputs.supplier_id.value,
                     name: formState.inputs.name.value,
                     status: formState.inputs.status.value,
                     type: formState.inputs.type.value,
@@ -137,7 +138,7 @@ const UpdateSupplier = () => {
         return (
             <div className="center">
                 <Card>
-                    <h2>Could not find user!</h2>
+                    <h2>Could not find supplier!</h2>
                 </Card>
             </div>
         );
@@ -149,15 +150,15 @@ const UpdateSupplier = () => {
             {!isLoading && loadedSupplier && (
                 <form className="supplier-form" onSubmit={placeUpdateSubmitHandler}>
                     <Input
-                        id="id"
+                        id="supplier_id"
                         element="input"
                         type="text"
                         label="Supplier_id"
                         validators={[VALIDATOR_REQUIRE()]}
                         errorText="Please enter a valid ID."
                         onInput={inputHandler}
-                        initialValue={formState.input.id.value}
-                        initialValid={formState.input.id.isValid}
+                        initialValue={loadedSupplier.supplier_id}
+                        initialValid={true}
                     />
 
                     <Input
@@ -167,8 +168,8 @@ const UpdateSupplier = () => {
                         validators={[VALIDATOR_REQUIRE()]}
                         errorText="Please enter a valid name."
                         onInput={inputHandler}
-                        initialValue={formState.input.name.value}
-                        initialValid={formState.input.name.isValid}
+                        initialValue={loadedSupplier.name}
+                        initialValid={true}
                     />
                     <Input
                         id="status"
@@ -177,9 +178,8 @@ const UpdateSupplier = () => {
                         validators={[VALIDATOR_REQUIRE()]}
                         errorText="Please enter a status."
                         onInput={inputHandler}
-                        initialValue={formState.input.status.value}
-                        initialValid={formState.input.status
-                            .isValid}
+                        initialValue={loadedSupplier.status}
+                        initialValid={true}
                     />
                     <Input
                         id="type"
@@ -188,9 +188,8 @@ const UpdateSupplier = () => {
                         validators={[VALIDATOR_REQUIRE()]}
                         errorText="Please enter a status."
                         onInput={inputHandler}
-                        initialValue={formState.input.type.value}
-                        initialValid={formState.input.type
-                            .isValid}
+                        initialValue={loadedSupplier.type}
+                        initialValid={true}
                     />
                     <Input
                         id="address"
@@ -199,8 +198,8 @@ const UpdateSupplier = () => {
                         validators={[VALIDATOR_MINLENGTH(5)]}
                         errorText="Please enter a valid address."
                         onInput={inputHandler}
-                        initialValue={formState.input.address.value}
-                        initialValid={formState.input.address.isValid}
+                        initialValue={loadedSupplier.address}
+                        initialValid={true}
                     />
                     <Input
                         id="telephone_no"
@@ -209,8 +208,8 @@ const UpdateSupplier = () => {
                         validators={[VALIDATOR_REQUIRE()]}
                         errorText="Please enter a valid telephone number."
                         onInput={inputHandler}
-                        initialValue={formState.input.telephone_no.value}
-                        initialValid={formState.input.telephone_no.isValid}
+                        initialValue={loadedSupplier.telephone_no}
+                        initialValid={true}
                     />
                     <Button type="submit" disabled={!formState.isValid}>
                         UPDATE SUPPLIER

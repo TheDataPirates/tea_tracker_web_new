@@ -13,8 +13,6 @@ import UpdateUser from "./users/pages/UpdateUser";
 import Reports from "./reports/pages/reports";
 import Auth from './dashboard/pages/Auth';
 import MainNavigation from './shared/components/Navigation/MainNavigation';
-
-
 import {AuthContext} from './shared/context/auth-context';
 import {useAuth} from "./shared/hooks/auth-hook";
 import Suppliers from "./suppliers/pages/Suppliers";
@@ -23,7 +21,6 @@ import UpdateSupplier from "./suppliers/pages/UpdateSupplier";
 import Machines from "./machines/pages/Machines";
 import NewMachine from "./machines/pages/NewMachine";
 import UpdateMachine from "./machines/pages/UpdateMachine";
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App = () => {
     const {token, login, logout, userId} = useAuth();

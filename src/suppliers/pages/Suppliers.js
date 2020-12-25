@@ -25,7 +25,7 @@ const Suppliers = () => {
 
     const userDeletedHandler = deletedSupplierId => {
         setLoadedSuppliers(prevUsers =>
-            prevUsers.filter(supp => supp.supp_id !== deletedSupplierId)
+            prevUsers.filter(supp => supp.supplier_id !== deletedSupplierId)
         );
     };
 
