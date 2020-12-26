@@ -1,5 +1,7 @@
 .machine-item {
-    margin: 1rem 0;
+    margin: 1rem;
+    /*width: 55%;*/
+
 }
 
 .machine-item__content {

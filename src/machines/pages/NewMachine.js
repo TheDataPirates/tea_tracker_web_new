@@ -1,117 +1,131 @@
-import React from 'react';
+import React, {useContext} from 'react';
 
 import Input from '../../shared/components/FormElements/Input';
 import Button from '../../shared/components/FormElements/Button';
 import {
     VALIDATOR_REQUIRE,
-    VALIDATOR_MINLENGTH
 } from '../../shared/util/validators';
-import { useForm } from '../../shared/hooks/form-hook';
-// import './UserForm.css';
+import {useForm} from '../../shared/hooks/form-hook';
+import {useHttpClient} from '../../shared/hooks/http-hook';
 
-const NewPlace = () => {
+import ImageUpload from "../../shared/components/FormElements/ImageUpload";
+import {AuthContext} from "../../shared/context/auth-context";
+import {useHistory} from "react-router-dom";
+import ErrorModal from "../../shared/components/UIElements/ErrorModal";
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
+import './MachineForm.css';
+
+const NewMachine = () => {
+    const auth = useContext(AuthContext);
+    const {isLoading, error, sendRequest, clearError} = useHttpClient();
     const [formState, inputHandler] = useForm(
         {
             id: {
                 value: '',
                 isValid: false
             },
-            fname: {
+            modal: {
                 value: '',
                 isValid: false
             },
-            lname: {
+            machine_purchase_date: {
                 value: '',
                 isValid: false
             },
-            password: {
+            power_info: {
                 value: '',
                 isValid: false
             },
-            dob: {
+            type: {
                 value: '',
                 isValid: false
             },
-            user_type: {
-                value: '',
-                isValid: false
-            },
-
         },
         false
     );
 
-    const userSubmitHandler = event => {
+    const history = useHistory();
+    const machineSubmitHandler = async event => {
         event.preventDefault();
         console.log(formState.inputs); // send this to the backend!
+        try {
+            const formData = new FormData();
+
+            formData.append('machine_id', formState.inputs.id.value);
+            formData.append('modal', formState.inputs.modal.value);
+            formData.append('machine_purchase_date', formState.inputs.machine_purchase_date.value);
+            formData.append('power_info', formState.inputs.power_info.value);
+            formData.append('type', formState.inputs.type.value);
+            formData.append('image', formState.inputs.image.value);
+
+            await sendRequest('http://localhost:8080/machine/machine', 'POST', formData, {
+                Authorization: 'Bearer ' + auth.token
+            });
+            history.push('/');
+        } catch (err) {
+        }// send this to the backend!
     };
 
     return (
-        <form className="user-form" onSubmit={userSubmitHandler}>
-            <Input
-                id="id"
-                element="input"
-                type="text"
-                label="User_id"
-                validators={[VALIDATOR_REQUIRE()]}
-                errorText="Please enter a valid ID."
-                onInput={inputHandler}
-            />
-            {/*<Input*/}
-            {/*    id="description"*/}
-            {/*    element="textarea"*/}
-            {/*    label="Description"*/}
-            {/*    validators={[VALIDATOR_MINLENGTH(5)]}*/}
-            {/*    errorText="Please enter a valid description (at least 5 characters)."*/}
-            {/*    onInput={inputHandler}*/}
-            {/*/>*/}
-            <Input
-                id="fname"
-                element="input"
-                label="First Name"
-                validators={[VALIDATOR_REQUIRE()]}
-                errorText="Please enter a valid name."
-                onInput={inputHandler}
-            />
-            <Input
-                id="lname"
-                element="input"
-                label="Last Name"
-                validators={[VALIDATOR_REQUIRE()]}
-                errorText="Please enter a valid name."
-                onInput={inputHandler}
-            />
-            <Input
-                id="password"
-                element="input"
-                label="password"
-                validators={[VALIDATOR_REQUIRE()]}
-                errorText="Please enter a valid password."
-                onInput={inputHandler}
-            />
-            <Input
-                id="dob"
-                element="input"
-                label="D.O.B"
-                validators={[VALIDATOR_REQUIRE()]}
-                errorText="Please enter a valid dob."
-                onInput={inputHandler}
-            />
-            <Input
-                id="user_type"
-                element="input"
-                label="User type"
-                validators={[VALIDATOR_REQUIRE()]}
-                errorText="Please enter a valid user type."
-                onInput={inputHandler}
-            />
+        <React.Fragment>
+            <ErrorModal error={error} onClear={clearError}/>
+            <form className="machine-form" onSubmit={machineSubmitHandler}>
+                {isLoading && <LoadingSpinner asOverlay />}
 
+                <Input
+                    id="id"
+                    element="input"
+                    type="text"
+                    label="Machine ID"
+                    validators={[VALIDATOR_REQUIRE()]}
+                    errorText="Please enter a valid ID."
+                    onInput={inputHandler}
+                />
 
-            <Button type="submit" disabled={!formState.isValid}>
-                ADD USER
-            </Button>
-        </form>
+                <Input
+                    id="modal"
+                    element="input"
+                    label="Modal"
+                    validators={[VALIDATOR_REQUIRE()]}
+                    errorText="Please enter a valid modal."
+                    onInput={inputHandler}
+                />
+                <Input
+                    id="machine_purchase_date"
+                    element="input"
+                    label="Machine Purchased Date"
+                    validators={[VALIDATOR_REQUIRE()]}
+                    errorText="Please enter a valid date."
+                    onInput={inputHandler}
+                />
+                <Input
+                    id="power_info"
+                    element="input"
+                    label="Power Information"
+                    validators={[VALIDATOR_REQUIRE()]}
+                    errorText="Please enter a valid information."
+                    onInput={inputHandler}
+                />
+
+                <Input
+                    id="type"
+                    element="input"
+                    label="Machine Type: Drier/Roll Breaker/Roller"
+                    validators={[VALIDATOR_REQUIRE()]}
+                    errorText="Please enter a valid type."
+                    onInput={inputHandler}
+                />
+                <ImageUpload
+                    id="image"
+                    onInput={inputHandler}
+                    errorText="Please provide an image."
+                />
+                <Button type="submit" disabled={!formState.isValid}>
+                    ADD MACHINE
+                </Button>
+            </form>
+        </React.Fragment>
     );
 };
 
-export default NewPlace;
+export default NewMachine;

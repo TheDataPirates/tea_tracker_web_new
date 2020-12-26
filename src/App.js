@@ -63,7 +63,7 @@ const App = () => {
                 <Route path="/machines/new" exact>
                     <NewMachine/>
                 </Route>
-                <Route path="/machines/:machId">
+                <Route path="/machines/edit">
                     <UpdateMachine/>
                 </Route>
                 <Redirect to="/"/>

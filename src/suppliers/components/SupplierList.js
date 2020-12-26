@@ -26,6 +26,7 @@ const SuppliersList = props => {
                         telephone_no={supp.telephone_no}
                         address={supp.address}
                         status={supp.status}
+                        onDelete={props.onDeleteUser}
                     />
                 ))}
         </Grid>

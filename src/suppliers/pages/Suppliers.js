@@ -23,7 +23,7 @@ const Suppliers = () => {
     }, [sendRequest]);
 
 
-    const userDeletedHandler = deletedSupplierId => {
+    const supplierDeletedHandler = deletedSupplierId => {
         setLoadedSuppliers(prevUsers =>
             prevUsers.filter(supp => supp.supplier_id !== deletedSupplierId)
         );
@@ -38,7 +38,7 @@ const Suppliers = () => {
                     <LoadingSpinner />
                 </div>
             )}
-            {!isLoading && loadedSuppliers &&  <SuppliersList items={loadedSuppliers}  onDeleteUser={userDeletedHandler} />}
+            {!isLoading && loadedSuppliers &&  <SuppliersList items={loadedSuppliers}  onDeleteSupplier={supplierDeletedHandler} />}
         </React.Fragment>
     )
 };

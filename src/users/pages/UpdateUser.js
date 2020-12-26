@@ -132,7 +132,6 @@ const UpdateUser = () => {
                     Authorization: 'Bearer ' + auth.token
                 }
             );
-            console.log('pressed');
             history.push('/users');
         } catch (err) {}
     };
