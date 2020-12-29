@@ -1,10 +1,13 @@
 import React from 'react';
+import Typography from "@material-ui/core/Typography";
 
 const Reports = () => {
     return (
-        <div>
-            <h1>hello reports</h1>
-        </div>
+        <React.Fragment>
+            <Typography align={'center'} variant={'h2'}>Production</Typography>
+
+
+        </React.Fragment>
     );
 };
 

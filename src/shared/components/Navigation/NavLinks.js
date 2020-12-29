@@ -2,6 +2,7 @@ import React, {useContext} from 'react';
 import { NavLink } from 'react-router-dom';
 
 import { AuthContext } from '../../context/auth-context';
+import DropdownMenu from '../Navigation/DropdownMenu';
 import './NavLinks.css';
 
 const NavLinks = props => {
@@ -19,7 +20,7 @@ const NavLinks = props => {
         )}
       {auth.isLoggedIn && (
           <li>
-            <NavLink to="/reports" exact>REPORTS</NavLink>
+            <DropdownMenu links={[{link:"/reports/production",linkName:'Production'},{link:"/reports/purchasing",linkName:'Purchasing'}]}/>
           </li>
       )}
       {auth.isLoggedIn && (

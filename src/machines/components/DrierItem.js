@@ -76,7 +76,7 @@ const DrierItem = props => {
                     can't be undone thereafter.
                 </p>
             </Modal>
-            <Grid item xs={12} sm={6} md={4}>
+            <Grid item xs={12} sm={6} md={4} style={{textAlign:"center"}}>
                 <div className="machine-item">
                     <Card className="machine-item__content">
                         {isLoading && <LoadingSpinner asOverlay/>}
