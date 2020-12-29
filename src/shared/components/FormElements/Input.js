@@ -1,6 +1,6 @@
-import React, { useReducer, useEffect } from 'react';
+import React, {useReducer, useEffect} from 'react';
 
-import { validate } from '../../util/validators';
+import {validate} from '../../util/validators';
 import './Input.css';
 
 const inputReducer = (state, action) => {
@@ -29,8 +29,8 @@ const Input = props => {
         isValid: props.initialValid || false
     });
 
-    const { id, onInput } = props;
-    const { value, isValid } = inputState;
+    const {id, onInput} = props;
+    const {value, isValid} = inputState;
 
     useEffect(() => {
         onInput(id, value, isValid)
@@ -50,25 +50,33 @@ const Input = props => {
         });
     };
 
-    const element =
-        props.element === 'input' ? (
-            <input
-                id={props.id}
-                type={props.type}
-                placeholder={props.placeholder}
-                onChange={changeHandler}
-                onBlur={touchHandler}
-                value={inputState.value}
-            />
-        ) : (
-            <textarea
-                id={props.id}
-                rows={props.rows || 3}
-                onChange={changeHandler}
-                onBlur={touchHandler}
-                value={inputState.value}
-            />
-        );
+    let element;
+    if (props.element === 'input') {
+        element = (<input
+            id={props.id}
+            type={props.type}
+            placeholder={props.placeholder}
+            onChange={changeHandler}
+            onBlur={touchHandler}
+            value={inputState.value}
+        />)
+    } else if (props.element === 'dropdown') {
+        element = (<select value={inputState.value} onChange={changeHandler}>
+            <option value="">Select...</option>
+            {props.dropdownItems.map(item => (
+                <option key={item} value={item}>{item}</option>
+            ))}
+        </select>)
+
+    } else {
+        element = (<textarea
+            id={props.id}
+            rows={props.rows || 3}
+            onChange={changeHandler}
+            onBlur={touchHandler}
+            value={inputState.value}
+        />)
+    }
 
     return (
         <div

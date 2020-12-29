@@ -1,14 +1,14 @@
-import React,{useContext}from 'react';
-import { useHistory } from 'react-router-dom';
+import React, {useContext} from 'react';
+import {useHistory} from 'react-router-dom';
 import Input from '../../shared/components/FormElements/Input';
 import Button from '../../shared/components/FormElements/Button';
 import {
     VALIDATOR_REQUIRE,
     VALIDATOR_MINLENGTH
 } from '../../shared/util/validators';
-import { useForm } from '../../shared/hooks/form-hook';
-import { useHttpClient } from '../../shared/hooks/http-hook';
-import { AuthContext } from '../../shared/context/auth-context';
+import {useForm} from '../../shared/hooks/form-hook';
+import {useHttpClient} from '../../shared/hooks/http-hook';
+import {AuthContext} from '../../shared/context/auth-context';
 import './UserForm.css';
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
@@ -16,7 +16,7 @@ import ImageUpload from "../../shared/components/FormElements/ImageUpload";
 
 const NewUser = () => {
     const auth = useContext(AuthContext);
-    const { isLoading, error, sendRequest, clearError } = useHttpClient();
+    const {isLoading, error, sendRequest, clearError} = useHttpClient();
     const [formState, inputHandler] = useForm(
         {
             id: {
@@ -44,13 +44,13 @@ const NewUser = () => {
                 value: '',
                 isValid: false
             },
-            nic:{
-                value:'',
-                isValid:false
+            nic: {
+                value: '',
+                isValid: false
             },
-            address:{
-                value:'',
-                isValid:false
+            address: {
+                value: '',
+                isValid: false
             }
 
         },
@@ -76,25 +76,26 @@ const NewUser = () => {
                 Authorization: 'Bearer ' + auth.token
             });
             history.push('/');
-        } catch (err) {}// send this to the backend!
+        } catch (err) {
+        }// send this to the backend!
     };
 
     return (
         <React.Fragment>
-            <ErrorModal error={error} onClear={clearError} />
+            <ErrorModal error={error} onClear={clearError}/>
 
             <form className="user-form" onSubmit={userSubmitHandler}>
-                {isLoading && <LoadingSpinner asOverlay />}
+                {isLoading && <LoadingSpinner asOverlay/>}
 
                 <Input
-                id="id"
-                element="input"
-                type="text"
-                label="User ID"
-                validators={[VALIDATOR_REQUIRE()]}
-                errorText="Please enter a valid ID."
-                onInput={inputHandler}
-            />
+                    id="id"
+                    element="input"
+                    type="text"
+                    label="User ID"
+                    validators={[VALIDATOR_REQUIRE()]}
+                    errorText="Please enter a valid ID."
+                    onInput={inputHandler}
+                />
 
                 <Input
                     id="name"
@@ -115,33 +116,29 @@ const NewUser = () => {
                     onInput={inputHandler}
                 />
 
-            <Input
-                id="dob"
-                element="input"
-                label="D.O.B"
-                type="text"
-                validators={[VALIDATOR_REQUIRE()]}
-                errorText="Please enter a valid Birth."
-                onInput={inputHandler}
-            />
-            <Input
-                id="user_type"
-                element="input"
-                label="User Type"
-                type="text"
-                validators={[VALIDATOR_REQUIRE()]}
-                errorText="Please enter a valid User Type."
-                onInput={inputHandler}
-            />
-            <Input
-                id="telephone_no"
-                element="input"
-                label="Telephone Number"
-                type="text"
-                validators={[VALIDATOR_REQUIRE()]}
-                errorText="Please enter a valid user Telephone Number."
-                onInput={inputHandler}
-            />
+                <Input
+                    id="dob"
+                    element="input"
+                    label="D.O.B"
+                    type="text"
+                    validators={[VALIDATOR_REQUIRE()]}
+                    errorText="Please enter a valid Birth."
+                    onInput={inputHandler}
+                />
+
+                <Input
+                    id="user_type" element="dropdown" label="User Type" onInput={inputHandler}
+                       dropdownItems={["Officer", "Agent"]} validators={[VALIDATOR_REQUIRE()]}
+                />
+                <Input
+                    id="telephone_no"
+                    element="input"
+                    label="Telephone Number"
+                    type="text"
+                    validators={[VALIDATOR_REQUIRE()]}
+                    errorText="Please enter a valid user Telephone Number."
+                    onInput={inputHandler}
+                />
                 <Input
                     id="nic"
                     element="input"
@@ -166,10 +163,10 @@ const NewUser = () => {
                 />
 
 
-            <Button type="submit" disabled={!formState.isValid}>
-                ADD USER
-            </Button>
-        </form>
+                <Button type="submit" disabled={!formState.isValid}>
+                    ADD USER
+                </Button>
+            </form>
         </React.Fragment>
     );
 };

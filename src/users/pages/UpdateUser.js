@@ -204,14 +204,10 @@ const UpdateUser = () => {
                         initialValue={loadedUser.dob}
                         initialValid={true}
                     />
+
                     <Input
-                        id="user_type"
-                        element="input"
-                        label="User Type"
-                        type="text"
-                        validators={[VALIDATOR_REQUIRE()]}
-                        errorText="Please enter a valid User Type."
-                        onInput={inputHandler}
+                        id="user_type" element="dropdown" label="User Type" onInput={inputHandler}
+                        dropdownItems={["Officer", "Agent"]} validators={[VALIDATOR_REQUIRE()]}
                         initialValue={loadedUser.user_type}
                         initialValid={true}
                     />

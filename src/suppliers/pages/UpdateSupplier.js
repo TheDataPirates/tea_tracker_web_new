@@ -181,15 +181,11 @@ const UpdateSupplier = () => {
                         initialValue={loadedSupplier.status}
                         initialValid={true}
                     />
-                    <Input
-                        id="type"
-                        element="input"
-                        label="TYPE"
-                        validators={[VALIDATOR_REQUIRE()]}
-                        errorText="Please enter a status."
-                        onInput={inputHandler}
-                        initialValue={loadedSupplier.type}
-                        initialValid={true}
+
+                    <Input id="type" element="dropdown" label="TYPE" onInput={inputHandler}
+                           dropdownItems={["State", "Villager"]} validators={[VALIDATOR_REQUIRE()]}
+                           initialValue={loadedSupplier.type}
+                           initialValid={true}
                     />
                     <Input
                         id="address"

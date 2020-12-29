@@ -62,12 +62,12 @@ const NewSupplier = () => {
             // formData.append('address', formState.inputs.address.value);
             // formData.append('status', formState.inputs.status.value);
             await sendRequest('http://localhost:8080/supp/supplier', 'POST', JSON.stringify({
-                supplier_id:formState.inputs.id.value,
-                name:formState.inputs.name.value,
-                type:formState.inputs.type.value,
-                telephone_no:formState.inputs.telephone_no.value,
-                address:formState.inputs.address.value,
-                status:formState.inputs.status.value
+                supplier_id: formState.inputs.id.value,
+                name: formState.inputs.name.value,
+                type: formState.inputs.type.value,
+                telephone_no: formState.inputs.telephone_no.value,
+                address: formState.inputs.address.value,
+                status: formState.inputs.status.value
             }), {
                 'Content-Type': 'application/json',
                 Authorization: 'Bearer ' + auth.token
@@ -119,14 +119,9 @@ const NewSupplier = () => {
                     errorText="Please enter a valid address."
                     onInput={inputHandler}
                 />
-                <Input
-                    id="type"
-                    element="input"
-                    label="TYPE"
-                    validators={[VALIDATOR_REQUIRE()]}
-                    errorText="Please enter a valid TYPE."
-                    onInput={inputHandler}
-                />
+
+                <Input id="type" element="dropdown" label="TYPE" onInput={inputHandler}
+                       dropdownItems={["State", "Villager"]} validators={[VALIDATOR_REQUIRE()]}/>
                 <Input
                     id="telephone_no"
                     element="input"
