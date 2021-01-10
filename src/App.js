@@ -5,13 +5,15 @@ import {
     Redirect,
     Switch
 } from 'react-router-dom';
-
+import {ThemeProvider} from '@material-ui/core/styles';
+import theme from "./shared/util/theme";
 import Users from './users/pages/Users';
 import Dashboard from "./dashboard/pages/Dashboard";
 import NewUser from "./users/pages/NewUser";
 import UpdateUser from "./users/pages/UpdateUser";
 import Reports from "./reports/pages/reports";
 import Auth from './dashboard/pages/Auth';
+import AuthNew from "./dashboard/pages/AuthNew";
 import MainNavigation from './shared/components/Navigation/MainNavigation';
 import {AuthContext} from './shared/context/auth-context';
 import {useAuth} from "./shared/hooks/auth-hook";
@@ -78,7 +80,8 @@ const App = () => {
             <Switch>
 
                 <Route path="/auth">
-                    <Auth/>
+                    {/*<Auth/>*/}
+                    <AuthNew/>
                 </Route>
                 <Redirect to="/auth"/>
             </Switch>
@@ -95,10 +98,12 @@ const App = () => {
                 logout: logout
             }}
         >
-            <Router>
-                <MainNavigation />
-                <main>{routes}</main>
-            </Router>
+            <ThemeProvider theme={theme}>
+                <Router>
+                    <MainNavigation/>
+                    <main>{routes}</main>
+                </Router>
+            </ThemeProvider>
         </AuthContext.Provider>
     );
 };

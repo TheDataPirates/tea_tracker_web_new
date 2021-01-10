@@ -2,7 +2,7 @@ import React from "react";
 import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import {NavLink} from "react-router-dom";
+import {Link} from "react-router-dom";
 
 const DropdownMenu =(props) =>{
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -32,8 +32,8 @@ const DropdownMenu =(props) =>{
                 onClose={handleClose}
             >
                 {props.links.map(link => (
-                    <MenuItem key={link.link} onClick={handleClose} >
-                        <NavLink to={link.link} exact>{link.linkName}</NavLink>
+                    <MenuItem key={link.link} onClick={handleClose} component={Link} to={link.link}>
+                        {link.linkName}
                     </MenuItem>
                 ))}
 

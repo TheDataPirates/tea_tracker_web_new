@@ -48,7 +48,7 @@
   color: white;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1390px) {
   .nav-links {
     flex-direction: row;
   }
@@ -63,14 +63,15 @@
   }
 
   .nav-links button {
-    border: 1px solid white;
+    /*border: 1px solid white;*/
     color: white;
     background: transparent;
+    border: none;
   }
 
   .nav-links button:hover,
   .nav-links button:active {
-    background: #fffaa4;
+    background: #f8df00;
     color: #292929;
   }
 }
