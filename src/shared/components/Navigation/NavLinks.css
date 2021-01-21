@@ -24,9 +24,12 @@
 .nav-links a:hover,
 .nav-links a:active,
 .nav-links a.active {
-  background: #f8df00;
-  border-color: #292929;
-  color: #292929;
+  /*background: #f8df00;*/
+  /*border-color: #292929;*/
+  color: #388e3c;
+  /*background-color: #adce74;*/
+  border-bottom: 4px solid #fff76a;
+  /*color: white;*/
 }
 
 .nav-links button {
@@ -68,10 +71,25 @@
     background: transparent;
     border: none;
   }
+  .nav-links a:hover,
+  .nav-links a:active,
+  .nav-links a.active {
+    /*background: #f8df00;*/
+    /*border-color: #292929;*/
+    /*background-color: #adce74;*/
+    /*color: white;*/
+    background-color: #adce74;
+    border-bottom: 4px solid #fff76a;
+    color: white;
+  }
 
   .nav-links button:hover,
   .nav-links button:active {
-    background: #f8df00;
-    color: #292929;
+    /*background: #f8df00;*/
+    /*color: #292929;*/
+    background-color: #adce74;
+    border-bottom: 4px solid #fff76a;
+    color: white;
+    border-radius: 0;
   }
 }

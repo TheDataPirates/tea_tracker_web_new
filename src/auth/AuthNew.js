@@ -2,16 +2,16 @@ import React, {useContext} from 'react';
 import Card from "@material-ui/core/Card";
 import CardContent from '@material-ui/core/CardContent';
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
-import Input from "../../shared/components/FormElements/Input";
-import {VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE} from "../../shared/util/validators";
-import Button from "../../shared/components/FormElements/Button";
-import {AuthContext} from "../../shared/context/auth-context";
-import {useHttpClient} from "../../shared/hooks/http-hook";
-import {useForm} from "../../shared/hooks/form-hook";
-import ErrorModal from "../../shared/components/UIElements/ErrorModal";
+import LoadingSpinner from "../shared/components/UIElements/LoadingSpinner";
+import Input from "../shared/components/FormElements/Input";
+import {VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE} from "../shared/util/validators";
+import Button from "../shared/components/FormElements/Button";
+import {AuthContext} from "../shared/context/auth-context";
+import {useHttpClient} from "../shared/hooks/http-hook";
+import {useForm} from "../shared/hooks/form-hook";
+import ErrorModal from "../shared/components/UIElements/ErrorModal";
 import Grid from "@material-ui/core/Grid";
-import background from "../../assets/bg15.png";
+import background from "../assets/bg15.png";
 
 const useStyles = makeStyles(theme=>({
 
@@ -28,7 +28,8 @@ const useStyles = makeStyles(theme=>({
         boxShadow:theme.shadows[10],
         borderRadius:15,
         padding:"5em 2em",
-        width:"30em"
+        width:"30em",
+        marginBottom:"20em"
     }
 }));
 
@@ -74,8 +75,7 @@ const AuthNew = () => {
     };
 
     return (
-        <Grid container alignItems={"center"} justify={"center"} style={{height:"55em"}}>
-
+        <Grid container alignItems={"center"} justify={"center"} style={{height:"60em"}}>
                 <Card className={classes.card}>
                     <ErrorModal error={error} onClear={clearError}/>
                     <CardContent>
