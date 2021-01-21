@@ -78,7 +78,7 @@
     /*border-color: #292929;*/
     /*background-color: #adce74;*/
     /*color: white;*/
-    background-color: #adce74;
+    /*background-color: #adce74;*/
     border-bottom: 4px solid #fff76a;
     color: white;
   }
@@ -87,7 +87,7 @@
   .nav-links button:active {
     /*background: #f8df00;*/
     /*color: #292929;*/
-    background-color: #adce74;
+    background-color: #388e3c;
     border-bottom: 4px solid #fff76a;
     color: white;
     border-radius: 0;
