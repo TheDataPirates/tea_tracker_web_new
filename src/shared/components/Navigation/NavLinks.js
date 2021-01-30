@@ -20,42 +20,45 @@ const NavLinks = props => {
         )}
       {auth.isLoggedIn && (
           <li>
-            <DropdownMenu links={[{link:"/reports/production",linkName:'Production'},{link:"/reports/purchasing",linkName:'Purchasing'}]}/>
+            <DropdownMenu links={[{link:"/reports/production",linkName:'Production'},{link:"/reports/purchasing",linkName:'Purchasing'}]} buttonName="Reports"/>
           </li>
       )}
       {auth.isLoggedIn && (
         <li>
-          <NavLink to="/users" exact>USERS</NavLink>
+          {/* <NavLink to="/users" exact>USERS</NavLink> */}
+          <DropdownMenu links={[{link:"/users",linkName:'View Users'},{link:"/users/new",linkName:'Add Users'}]} buttonName="Users"/>
         </li>
       )}
-
+{/* 
         {auth.isLoggedIn && (
             <li>
                 <NavLink to="/users/new">ADD USERS</NavLink>
             </li>
-        )}
+        )} */}
 
 
       {auth.isLoggedIn && (
           <li>
-            <NavLink to="/suppliers" exact>SUPPLIERS</NavLink>
+            {/* <NavLink to="/suppliers" exact>SUPPLIERS</NavLink> */}
+            <DropdownMenu links={[{link:"/suppliers",linkName:'View Suppliers'},{link:"/suppliers/new",linkName:'Add Suppliers'}]} buttonName="Suppliers"/>
           </li>
       )}
-      {auth.isLoggedIn && (
+      {/* {auth.isLoggedIn && (
           <li>
             <NavLink to="/suppliers/new">ADD SUPPLIERS</NavLink>
           </li>
-      )}
+      )} */}
       {auth.isLoggedIn && (
           <li>
-            <NavLink to="/machines" exact>MACHINES</NavLink>
+            {/* <NavLink to="/machines" exact>MACHINES</NavLink> */}
+            <DropdownMenu links={[{link:"/machines",linkName:'View Machines'},{link:"/machines/new",linkName:'Add Machines'}]} buttonName="Machines"/>
           </li>
       )}
-      {auth.isLoggedIn && (
+      {/* {auth.isLoggedIn && (
           <li>
             <NavLink to="/machines/new">ADD MACHINES</NavLink>
           </li>
-      )}
+      )} */}
       {auth.isLoggedIn && (
         <li>
           <button onClick={auth.logout}>LOGOUT</button>

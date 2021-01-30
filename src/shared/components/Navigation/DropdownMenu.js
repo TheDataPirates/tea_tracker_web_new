@@ -3,6 +3,7 @@ import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import {Link} from "react-router-dom";
+import { Fade } from "@material-ui/core";
 
 const DropdownMenu =(props) =>{
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -22,7 +23,7 @@ const DropdownMenu =(props) =>{
                 aria-haspopup="true"
                 onClick={handleClick}
             >
-                REPORTS
+                {props.buttonName}
             </Button>
             <Menu
                 id="simple-menu"
@@ -30,6 +31,7 @@ const DropdownMenu =(props) =>{
                 keepMounted
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
+                
             >
                 {props.links.map(link => (
                     <MenuItem key={link.link} onClick={handleClose} component={Link} to={link.link}>
