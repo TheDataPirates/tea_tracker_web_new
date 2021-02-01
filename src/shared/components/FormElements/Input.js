@@ -62,7 +62,7 @@ const Input = props => {
         />)
     } else if (props.element === 'dropdown') {
         element = (<select value={inputState.value} onChange={changeHandler}>
-            <option value="">Select...</option>
+            <option value="" ></option>
             {props.dropdownItems.map(item => (
                 <option key={item} value={item}>{item}</option>
             ))}

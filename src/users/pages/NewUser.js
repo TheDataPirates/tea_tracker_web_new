@@ -1,22 +1,25 @@
-import React, {useContext} from 'react';
-import {useHistory} from 'react-router-dom';
+import React, { useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import Input from '../../shared/components/FormElements/Input';
 import Button from '../../shared/components/FormElements/Button';
 import {
     VALIDATOR_REQUIRE,
     VALIDATOR_MINLENGTH
 } from '../../shared/util/validators';
-import {useForm} from '../../shared/hooks/form-hook';
-import {useHttpClient} from '../../shared/hooks/http-hook';
-import {AuthContext} from '../../shared/context/auth-context';
+import { useForm } from '../../shared/hooks/form-hook';
+import { useHttpClient } from '../../shared/hooks/http-hook';
+import { AuthContext } from '../../shared/context/auth-context';
 import './UserForm.css';
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import ImageUpload from "../../shared/components/FormElements/ImageUpload";
+import background from "../../assets/bg15.png";
+import { Paper } from '@material-ui/core';
+import Grid from "@material-ui/core/Grid";
 
 const NewUser = () => {
     const auth = useContext(AuthContext);
-    const {isLoading, error, sendRequest, clearError} = useHttpClient();
+    const { isLoading, error, sendRequest, clearError } = useHttpClient();
     const [formState, inputHandler] = useForm(
         {
             id: {
@@ -58,6 +61,17 @@ const NewUser = () => {
     );
     const history = useHistory();
 
+    const styles = {
+        paperContainer: {
+            backgroundImage: `url(${background})`,
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            backgroundSize: 'cover',
+            height: "100%",
+            width: "100%"
+        }
+    };
+
     const userSubmitHandler = async event => {
         event.preventDefault();
         console.log(formState.inputs);
@@ -82,91 +96,97 @@ const NewUser = () => {
 
     return (
         <React.Fragment>
-            <ErrorModal error={error} onClear={clearError}/>
 
-            <form className="user-form" onSubmit={userSubmitHandler}>
-                {isLoading && <LoadingSpinner asOverlay/>}
+            <Grid container alignItems={"center"} justify={"center"}>
+                <Paper style={styles.paperContainer}>
 
-                <Input
-                    id="id"
-                    element="input"
-                    type="text"
-                    label="User ID"
-                    validators={[VALIDATOR_REQUIRE()]}
-                    errorText="Please enter a valid ID."
-                    onInput={inputHandler}
-                />
+                    <ErrorModal error={error} onClear={clearError} />
 
-                <Input
-                    id="name"
-                    element="input"
-                    label="Name"
-                    type="text"
-                    validators={[VALIDATOR_REQUIRE()]}
-                    errorText="Please enter a valid name."
-                    onInput={inputHandler}
-                />
-                <Input
-                    element="input"
-                    id="password"
-                    type="password"
-                    label="Password"
-                    validators={[VALIDATOR_MINLENGTH(4)]}
-                    errorText="Please enter a valid password, at least 4 characters."
-                    onInput={inputHandler}
-                />
+                    <form className="user-form" onSubmit={userSubmitHandler}>
+                        {isLoading && <LoadingSpinner asOverlay />}
 
-                <Input
-                    id="dob"
-                    element="input"
-                    label="D.O.B"
-                    type="text"
-                    validators={[VALIDATOR_REQUIRE()]}
-                    errorText="Please enter a valid Birth."
-                    onInput={inputHandler}
-                />
+                        <Input
+                            id="id"
+                            element="input"
+                            type="text"
+                            label="User ID :"
+                            validators={[VALIDATOR_REQUIRE()]}
+                            errorText="Please enter a valid ID."
+                            onInput={inputHandler}
+                        />
 
-                <Input
-                    id="user_type" element="dropdown" label="User Type" onInput={inputHandler}
-                       dropdownItems={["Officer", "Agent"]} validators={[VALIDATOR_REQUIRE()]}
-                />
-                <Input
-                    id="telephone_no"
-                    element="input"
-                    label="Telephone Number"
-                    type="text"
-                    validators={[VALIDATOR_REQUIRE()]}
-                    errorText="Please enter a valid user Telephone Number."
-                    onInput={inputHandler}
-                />
-                <Input
-                    id="nic"
-                    element="input"
-                    label="NIC"
-                    type="text"
-                    validators={[VALIDATOR_REQUIRE()]}
-                    errorText="Please enter a valid user NIC."
-                    onInput={inputHandler}
-                />
-                <Input
-                    id="address"
-                    element="textarea"
-                    label="Address"
-                    validators={[VALIDATOR_MINLENGTH(5)]}
-                    errorText="Please enter a valid description (at least 5 characters)."
-                    onInput={inputHandler}
-                />
-                <ImageUpload
-                    id="image"
-                    onInput={inputHandler}
-                    errorText="Please provide an image."
-                />
+                        <Input
+                            id="name"
+                            element="input"
+                            label="Name :"
+                            type="text"
+                            validators={[VALIDATOR_REQUIRE()]}
+                            errorText="Please enter a valid name."
+                            onInput={inputHandler}
+                        />
+                        <Input
+                            element="input"
+                            id="password"
+                            type="password"
+                            label="Password :"
+                            validators={[VALIDATOR_MINLENGTH(4)]}
+                            errorText="Please enter a valid password, at least 4 characters."
+                            onInput={inputHandler}
+                        />
+
+                        <Input
+                            id="dob"
+                            element="input"
+                            label="D.O.B :"
+                            type="text"
+                            validators={[VALIDATOR_REQUIRE()]}
+                            errorText="Please enter a valid Birth."
+                            onInput={inputHandler}
+                        />
+
+                        <Input
+                            id="user_type" element="dropdown" label="User Type :" onInput={inputHandler}
+                            dropdownItems={["Officer", "Agent"]} validators={[VALIDATOR_REQUIRE()]}
+                        />
+                        <Input
+                            id="telephone_no"
+                            element="input"
+                            label="Telephone Number :"
+                            type="text"
+                            validators={[VALIDATOR_REQUIRE()]}
+                            errorText="Please enter a valid user Telephone Number."
+                            onInput={inputHandler}
+                        />
+                        <Input
+                            id="nic"
+                            element="input"
+                            label="NIC :"
+                            type="text"
+                            validators={[VALIDATOR_REQUIRE()]}
+                            errorText="Please enter a valid user NIC."
+                            onInput={inputHandler}
+                        />
+                        <Input
+                            id="address"
+                            element="textarea"
+                            label="Address :"
+                            validators={[VALIDATOR_MINLENGTH(5)]}
+                            errorText="Please enter a valid description (at least 5 characters)."
+                            onInput={inputHandler}
+                        />
+                        <ImageUpload
+                            id="image"
+                            onInput={inputHandler}
+                            errorText="Please provide an image."
+                        />
 
 
-                <Button type="submit" disabled={!formState.isValid}>
-                    ADD USER
+                        <Button type="submit" disabled={!formState.isValid}>
+                            ADD USER
                 </Button>
-            </form>
+                    </form>
+                </Paper>
+            </Grid>
         </React.Fragment>
     );
 };

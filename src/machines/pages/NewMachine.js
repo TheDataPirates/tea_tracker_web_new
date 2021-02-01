@@ -13,6 +13,9 @@ import {AuthContext} from "../../shared/context/auth-context";
 import {useHistory} from "react-router-dom";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
+import background from "../../assets/bg15.png";
+import { Paper } from '@material-ui/core';
+import Grid from "@material-ui/core/Grid";
 import './MachineForm.css';
 
 const NewMachine = () => {
@@ -45,6 +48,18 @@ const NewMachine = () => {
     );
 
     const history = useHistory();
+
+    const styles = {
+        paperContainer: {
+            backgroundImage: `url(${background})`,
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            backgroundSize: 'cover',
+            height: "100%",
+            width: "100%"
+        }
+    };
+
     const machineSubmitHandler = async event => {
         event.preventDefault();
         console.log(formState.inputs); // send this to the backend!
@@ -68,6 +83,8 @@ const NewMachine = () => {
 
     return (
         <React.Fragment>
+            <Grid container alignItems={"center"} justify={"center"}>
+                <Paper style={styles.paperContainer}>
             <ErrorModal error={error} onClear={clearError}/>
             <form className="machine-form" onSubmit={machineSubmitHandler}>
                 {isLoading && <LoadingSpinner asOverlay />}
@@ -76,7 +93,7 @@ const NewMachine = () => {
                     id="id"
                     element="input"
                     type="text"
-                    label="Machine ID"
+                    label="Machine ID :"
                     validators={[VALIDATOR_REQUIRE()]}
                     errorText="Please enter a valid ID."
                     onInput={inputHandler}
@@ -85,7 +102,7 @@ const NewMachine = () => {
                 <Input
                     id="modal"
                     element="input"
-                    label="Modal"
+                    label="Modal :"
                     validators={[VALIDATOR_REQUIRE()]}
                     errorText="Please enter a valid modal."
                     onInput={inputHandler}
@@ -93,7 +110,7 @@ const NewMachine = () => {
                 <Input
                     id="machine_purchase_date"
                     element="input"
-                    label="Machine Purchased Date"
+                    label="Machine Purchased Date : "
                     validators={[VALIDATOR_REQUIRE()]}
                     errorText="Please enter a valid date."
                     onInput={inputHandler}
@@ -101,7 +118,7 @@ const NewMachine = () => {
                 <Input
                     id="power_info"
                     element="input"
-                    label="Power Information"
+                    label="Power Information :"
                     validators={[VALIDATOR_REQUIRE()]}
                     errorText="Please enter a valid information."
                     onInput={inputHandler}
@@ -110,7 +127,7 @@ const NewMachine = () => {
                 <Input
                     id="type"
                     element="input"
-                    label="Machine Type: Drier/Roll Breaker/Roller"
+                    label="Machine Type: Drier / Roll Breaker / Roller"
                     validators={[VALIDATOR_REQUIRE()]}
                     errorText="Please enter a valid type."
                     onInput={inputHandler}
@@ -124,6 +141,8 @@ const NewMachine = () => {
                     ADD MACHINE
                 </Button>
             </form>
+            </Paper>
+            </Grid>
         </React.Fragment>
     );
 };

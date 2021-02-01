@@ -29,7 +29,8 @@ const useStyles = makeStyles(theme=>({
         borderRadius:15,
         padding:"5em 2em",
         width:"30em",
-        marginBottom:"20em"
+        marginBottom:"20em",
+        background:" rgb(0, 0, 0, 0.3)"
     }
 }));
 
@@ -80,8 +81,8 @@ const AuthNew = () => {
                     <ErrorModal error={error} onClear={clearError}/>
                     <CardContent>
                         {isLoading && <LoadingSpinner asOverlay/>}
-                        <h2>Login Required</h2>
-                        <hr/>
+                        <h2 style={{color:"white", textAlign:"center"}}>Login Required</h2>
+                        <hr style={{height:"0.15rem", color:"white", backgroundColor:"white"}} />
                         <form onSubmit={authSubmitHandler}>
                             <Input
                                 element="input"
