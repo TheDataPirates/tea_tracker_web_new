@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { AuthContext } from '../../context/auth-context';
 import DropdownMenu from '../Navigation/DropdownMenu';
 import './NavLinks.css';
+import DropdownLogout from "./DropdownLogout";
 
 const NavLinks = props => {
   const auth = useContext(AuthContext);
@@ -61,7 +62,8 @@ const NavLinks = props => {
       )} */}
       {auth.isLoggedIn && (
         <li>
-          <button onClick={auth.logout}>LOGOUT</button>
+          {/*<button onClick={auth.logout}>LOGOUT</button>*/}
+          <DropdownLogout/>
         </li>
       )}
     </ul>
