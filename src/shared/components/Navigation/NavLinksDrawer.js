@@ -10,7 +10,7 @@ const NavLinksDrawer = props => {
 
 
     return (
-        <ul className="nav-links">
+        <ul className="nav-links-drawer">
             {auth.isLoggedIn && (
                 <li>
                     <NavLink to="/" exact>

@@ -21,7 +21,7 @@ const NavLinks = props => {
         )}
       {auth.isLoggedIn && (
           <li>
-            <DropdownMenu links={[{link:"/reports/production",linkName:'Production'},{link:"/reports/purchasing",linkName:'Purchasing'}]} buttonName="Reports"/>
+            <DropdownMenu links={[{link:"/reports/production",linkName:'Production'},{link:"/reports/purchasing",linkName:'Purchasing'}]} buttonName="Production"/>
           </li>
       )}
       {auth.isLoggedIn && (

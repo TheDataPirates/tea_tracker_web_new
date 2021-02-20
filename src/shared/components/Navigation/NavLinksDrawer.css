@@ -1,4 +1,4 @@
-.nav-links {
+.nav-links-drawer {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -10,20 +10,20 @@
     align-items: center;
   }
   
-  .nav-links li {
+  .nav-links-drawer li {
     margin: 1rem;
   }
   
-  .nav-links a {
+  .nav-links-drawer a {
     border: 1px solid transparent;
     color: #292929;
     text-decoration: none;
     padding: 0.5rem;
   }
   
-  .nav-links a:hover,
-  .nav-links a:active,
-  .nav-links a.active {
+  .nav-links-drawer a:hover,
+  .nav-links-drawer a:active,
+  .nav-links-drawer a.active {
     /*background: #f8df00;*/
     /*border-color: #292929;*/
     color: #388e3c;
@@ -32,7 +32,7 @@
     /*color: white;*/
   }
   
-  .nav-links button {
+  .nav-links-drawer button {
     cursor: pointer;
     border: 1px solid #292929;
     color: #292929;
@@ -41,39 +41,39 @@
     font: inherit;
   }
   
-  .nav-links button:focus {
+  .nav-links-drawer button:focus {
     outline: none;
   }
   
-  .nav-links button:hover,
-  .nav-links button:active {
+  .nav-links-drawer button:hover,
+  .nav-links-drawer button:active {
     background: #292929;
     color: white;
   }
   
   @media (min-width: 1000px) {
-    .nav-links {
+    .nav-links-drawer {
       flex-direction: row;
     }
   
-    .nav-links li {
+    .nav-links-drawer li {
       margin: 0.2rem 0.1rem;
     }
   
-    .nav-links a {
+    .nav-links-drawer a {
       color: white;
       text-decoration: none;
     }
   
-    .nav-links button {
+    .nav-links-drawer button {
       /*border: 1px solid white;*/
       color: white;
       background: transparent;
       border: none;
     }
-    .nav-links a:hover,
-    .nav-links a:active,
-    .nav-links a.active {
+    .nav-links-drawer a:hover,
+    .nav-links-drawer a:active,
+    .nav-links-drawer a.active {
       /*background: #f8df00;*/
       /*border-color: #292929;*/
       /*background-color: #adce74;*/
@@ -83,8 +83,8 @@
       color: white;
     }
   
-    .nav-links button:hover,
-    .nav-links button:active {
+    .nav-links-drawer button:hover,
+    .nav-links-drawer button:active {
       /*background: #f8df00;*/
       /*color: #292929;*/
       background-color: #388e3c;

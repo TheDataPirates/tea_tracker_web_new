@@ -11,7 +11,7 @@ import Users from './users/pages/Users';
 import Dashboard from "./dashboard/pages/Dashboard";
 import NewUser from "./users/pages/NewUser";
 import UpdateUser from "./users/pages/UpdateUser";
-import Reports from "./reports/pages/reports";
+import Production from "./reports/pages/Production";
 import Auth from './auth/Auth';
 import AuthNew from "./auth/AuthNew";
 import MainNavigation from './shared/components/Navigation/MainNavigation';
@@ -39,7 +39,7 @@ const App = () => {
                     <Dashboard/>
                 </Route>
                 <Route path="/reports/production" exact>
-                    <Reports/>
+                    <Production/>
                 </Route>
                 <Route path="/reports/purchasing" exact>
                     <Purchasing/>
