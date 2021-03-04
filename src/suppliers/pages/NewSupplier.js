@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, {useContext} from 'react';
 
 import Input from '../../shared/components/FormElements/Input';
 import Button from '../../shared/components/FormElements/Button';
@@ -6,21 +6,21 @@ import {
     VALIDATOR_REQUIRE,
     VALIDATOR_MINLENGTH
 } from '../../shared/util/validators';
-import { useForm } from '../../shared/hooks/form-hook';
+import {useForm} from '../../shared/hooks/form-hook';
 import './SupplierForm.css';
-import { AuthContext } from "../../shared/context/auth-context";
-import { useHttpClient } from "../../shared/hooks/http-hook";
-import { useHistory } from "react-router-dom";
+import {AuthContext} from "../../shared/context/auth-context";
+import {useHttpClient} from "../../shared/hooks/http-hook";
+import {useHistory} from "react-router-dom";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import background from "../../assets/bg15.png";
-import { Paper } from '@material-ui/core';
+import {Paper} from '@material-ui/core';
 import Grid from "@material-ui/core/Grid";
 
 
 const NewSupplier = () => {
     const auth = useContext(AuthContext);
-    const { isLoading, error, sendRequest, clearError } = useHttpClient();
+    const {isLoading, error, sendRequest, clearError} = useHttpClient();
     const [formState, inputHandler] = useForm(
         {
             id: {
@@ -94,13 +94,13 @@ const NewSupplier = () => {
 
     return (
         <React.Fragment>
-            <Grid container alignItems={"center"} justify={"center"} style={{ height: "60em" }}>
+            <Grid container alignItems={"center"} justify={"center"} style={{height: "60em"}}>
                 <Paper style={styles.paperContainer}>
 
-                    <ErrorModal error={error} onClear={clearError} />
+                    <ErrorModal error={error} onClear={clearError}/>
 
                     <form className="supplier-form" onSubmit={supplierSubmitHandler}>
-                        {isLoading && <LoadingSpinner asOverlay />}
+                        {isLoading && <LoadingSpinner asOverlay/>}
 
                         <Input
                             id="id"
@@ -138,7 +138,8 @@ const NewSupplier = () => {
                         />
 
                         <Input id="type" element="dropdown" label="Type : " onInput={inputHandler}
-                            dropdownItems={["Estate Owner", "Villager"]} validators={[VALIDATOR_REQUIRE()]} />
+                               dropdownItems={["Grower Direct", "Grower through Agent", "Dealer"]}
+                               validators={[VALIDATOR_REQUIRE()]}/>
                         <Input
                             id="telephone_no"
                             element="input"

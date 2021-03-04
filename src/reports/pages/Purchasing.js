@@ -88,34 +88,34 @@ const Purchasing = () => {
                 <Grid item style={{marginLeft:"5rem",marginRight:"5rem"}}>
                     {!isLoading && loadedSuppliers && <Report items={loadedSuppliers} onSelect={supplierProfileHandler} />}
                 </Grid>
-                <Grid item container justify={"center"}>
-                    <Grid item>
-                    { loadedSelectSuppliers&&
-                    <Card className="supplier-profile-item__content">
-                        {isLoading && <LoadingSpinner asOverlay/>}
-                        <div className="supplier-profile-item__image">
-                            <img
-                                src={`http://localhost:8080/${loadedSelectSuppliers[0].image}`}
-                                alt={loadedSelectSuppliers[0].name}
-                            />
-                        </div>
-                        <div className="supplier-profile-item__info">
-                            <h1>{loadedSelectSuppliers[0].name}</h1>
-                            <h2>{loadedSelectSuppliers[0].supplier_id}</h2>
-                            <p>{loadedSelectSuppliers[0].type}</p>
-                            <h3>{loadedSelectSuppliers[0].address}</h3>
-                            <h4>{loadedSelectSuppliers[0].status}</h4>
-                            <p>{loadedSelectSuppliers[0].telephone_no}</p>
+                {/*<Grid item container justify={"center"}>*/}
+                {/*    <Grid item>*/}
+                {/*    { loadedSelectSuppliers&&*/}
+                {/*    <Card className="supplier-profile-item__content">*/}
+                {/*        {isLoading && <LoadingSpinner asOverlay/>}*/}
+                {/*        <div className="supplier-profile-item__image">*/}
+                {/*            <img*/}
+                {/*                src={`http://localhost:8080/${loadedSelectSuppliers[0].image}`}*/}
+                {/*                alt={loadedSelectSuppliers[0].name}*/}
+                {/*            />*/}
+                {/*        </div>*/}
+                {/*        <div className="supplier-profile-item__info">*/}
+                {/*            <h1>{loadedSelectSuppliers[0].name}</h1>*/}
+                {/*            <h2>{loadedSelectSuppliers[0].supplier_id}</h2>*/}
+                {/*            <p>{loadedSelectSuppliers[0].type}</p>*/}
+                {/*            <h3>{loadedSelectSuppliers[0].address}</h3>*/}
+                {/*            <h4>{loadedSelectSuppliers[0].status}</h4>*/}
+                {/*            <p>{loadedSelectSuppliers[0].telephone_no}</p>*/}
 
-                        </div>
-                        <div className="supplier-profile-item__actions">
-                            <Button to={`/suppliers/${loadedSelectSuppliers[0].supplier_id}`}>EDIT</Button>
-                        </div>
+                {/*        </div>*/}
+                {/*        <div className="supplier-profile-item__actions">*/}
+                {/*            <Button to={`/suppliers/${loadedSelectSuppliers[0].supplier_id}`}>EDIT</Button>*/}
+                {/*        </div>*/}
 
-                    </Card>
-                    }
-                    </Grid>
-                </Grid>
+                {/*    </Card>*/}
+                {/*    }*/}
+                {/*    </Grid>*/}
+                {/*</Grid>*/}
             </Grid>
         </div>
     );

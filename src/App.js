@@ -25,6 +25,7 @@ import NewMachine from "./machines/pages/NewMachine";
 import UpdateMachine from "./machines/pages/UpdateMachine";
 import Purchasing from "./reports/pages/Purchasing";
 import UserProfile from "./users/pages/UserProfile";
+import SupplierDetails from "./reports/pages/SupplierDetails";
 
 const App = () => {
     const {token, login, logout, userId} = useAuth();
@@ -43,6 +44,9 @@ const App = () => {
                 </Route>
                 <Route path="/reports/purchasing" exact>
                     <Purchasing/>
+                </Route>
+                <Route path="/reports/purchasing/:suppId" exact>
+                    <SupplierDetails/>
                 </Route>
                 <Route path="/users/userprofile" exact>
                     <UserProfile/>
