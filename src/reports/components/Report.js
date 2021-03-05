@@ -7,7 +7,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { useHistory } from "react-router-dom";
+import {useHistory} from "react-router-dom";
 
 const useStyles = makeStyles({
     table: {
@@ -30,35 +30,50 @@ const useStyles = makeStyles({
 const Report = (props) => {
     const history = useHistory();
     const classes = useStyles();
-
+    let i;
 
     return (
         <TableContainer component={Paper} elevation={3} square={false}>
             <Table className={classes.table} aria-label="simple table">
                 <TableHead>
                     <TableRow>
-                        <TableCell>Supplier Name</TableCell>
-                        <TableCell align="right">ID</TableCell>
-                        <TableCell align="right">Type</TableCell>
-                        <TableCell align="right">Telephone</TableCell>
-                        <TableCell align="right">Address</TableCell>
-                        <TableCell align="right">Status</TableCell>
+                        {props.header.map((col) => (
+                            <TableCell>{col}</TableCell>
+                        ))}
+                        {/*<TableCell>Supplier Name</TableCell>*/}
+                        {/*<TableCell align="right">ID</TableCell>*/}
+                        {/*<TableCell align="right">Type</TableCell>*/}
+                        {/*<TableCell align="right">Telephone</TableCell>*/}
+                        {/*<TableCell align="right">Address</TableCell>*/}
+                        {/*<TableCell align="right">Status</TableCell>*/}
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {props.items.map((row) => (
-                        <TableRow key={row.name} onClick={()=> history.push(`/reports/purchasing/${row.supplier_id}`)}>
+                    {props.items.map((row) => {
+                        // let i = supplier_id;
+                        // console.log(row[Object.keys(row)[3]]);
+                        return (
+                            <TableRow key={row.name}
+                                      onClick={() => history.push(`/reports/purchasing/${row.supplier_id}`)}>
 
-                            <TableCell component="th" scope="row">
-                                {row.name}
-                            </TableCell>
-                            <TableCell align="right">{row.supplier_id}</TableCell>
-                            <TableCell align="right">{row.type}</TableCell>
-                            <TableCell align="right">{row.telephone_no}</TableCell>
-                            <TableCell align="right">{row.address}</TableCell>
-                            <TableCell align="right">{row.status}</TableCell>
-                        </TableRow>
-                    ))}
+
+                                {props.header.map((col, i) => (
+
+
+                                    <TableCell component="th" scope="row">
+                                        {row[Object.keys(row)[i]]}
+                                    </TableCell>
+
+                                ))}
+                                {/*<TableCell align="right">{row.supplier_id}</TableCell>*/}
+                                {/*<TableCell align="right">{row.type}</TableCell>*/}
+                                {/*<TableCell align="right">{row.telephone_no}</TableCell>*/}
+                                {/*<TableCell align="right">{row.address}</TableCell>*/}
+                                {/*<TableCell align="right">{row.status}</TableCell>*/}
+
+                            </TableRow>);
+
+                    })}
                 </TableBody>
             </Table>
         </TableContainer>
