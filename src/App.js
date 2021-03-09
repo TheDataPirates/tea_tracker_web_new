@@ -45,7 +45,7 @@ const App = () => {
                 <Route path="/reports/purchasing" exact>
                     <Purchasing/>
                 </Route>
-                <Route path="/reports/purchasing/:suppId" exact>
+                <Route path="/reports/purchasing/supplierlots" exact>
                     <SupplierDetails/>
                 </Route>
                 <Route path="/users/userprofile" exact>

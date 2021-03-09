@@ -8,6 +8,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import {useHistory} from "react-router-dom";
+import qs from "query-string";
 
 const useStyles = makeStyles({
     table: {
@@ -30,7 +31,14 @@ const useStyles = makeStyles({
 const Report = (props) => {
     const history = useHistory();
     const classes = useStyles();
-    let i;
+    const queryParam = qs.parse(window.location.search);
+    // const newQueryParam = {
+    //     ...queryParam,
+    //     supplier_id: props.id,
+    //     type: props.type,
+    //     name:
+    //
+    // }
 
     return (
         <TableContainer component={Paper} elevation={3} square={false}>
@@ -54,10 +62,16 @@ const Report = (props) => {
                         // console.log(row[Object.keys(row)[3]]);
                         return (
                             <TableRow key={row.name}
-                                      onClick={() => history.push(`/reports/purchasing/${row.supplier_id}`)}>
+                                      onClick={() => history.push({pathname: '/reports/purchasing/supplierlots', search:qs.stringify({
+                                          ...queryParam,
+                                          supplier_id: row.supplier_id,
+                                          type: row.type,
+                                          name:row.name
+
+                                      })})}>
 
 
-                                {props.header.map((col, i) => (
+                                {props.header.map((col, i) => (//header used for column count
 
 
                                     <TableCell component="th" scope="row">

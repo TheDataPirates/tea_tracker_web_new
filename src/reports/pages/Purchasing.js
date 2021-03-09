@@ -64,19 +64,19 @@ const Purchasing = () => {
         fetchSuppliers();
     }, [sendRequest]);
 
-    const supplierProfileHandler = async (id) => {
-
-        // setShowConfirmModal(false);
-        try {
-            const responseData =   await sendRequest(
-                `http://localhost:8080/supp/suppliers/${id}`,
-
-            );
-            setLoadedSelectSuppliers(responseData.supplier);
-            console.log(responseData.supplier);
-        } catch (err) {
-        }
-    };
+    // const supplierProfileHandler = async (id) => {
+    //
+    //     // setShowConfirmModal(false);
+    //     try {
+    //         const responseData =   await sendRequest(
+    //             `http://localhost:8080/supp/suppliers/${id}`,
+    //
+    //         );
+    //         setLoadedSelectSuppliers(responseData.supplier);
+    //         console.log(responseData.supplier);
+    //     } catch (err) {
+    //     }
+    // };
 
 
     return (
@@ -90,7 +90,7 @@ const Purchasing = () => {
                 )}
                 <Typography align={'center'} variant={'h2'}>Purchasing</Typography>
                 <Grid item style={{marginLeft:"5rem",marginRight:"5rem"}}>
-                    {!isLoading && loadedSuppliers && <Report items={loadedSuppliers}  header= {['ID','Supplier Name','Type','Telephone','Address','Status']} onSelect={supplierProfileHandler} />}
+                    {!isLoading && loadedSuppliers && <Report items={loadedSuppliers}  header= {['ID','Supplier Name','Type','Telephone','Address','Status']}  />}
                 </Grid>
 
             </Grid>
