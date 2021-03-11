@@ -56,10 +56,22 @@
     .supplier-profile-item__image {
         height: 14em;
     }
+
     .supplier-profile-item__content {
-        /*margin: 10em auto;*/
-        width: 33em;
-        height: 35em;
-        padding: 0;
+        display: flex;
+
+        margin-top: 5%;
+        /*margin-bottom: 5%;*/
+        /*margin-left: 20%;*/
+        /*margin-right: 20%;*/
+        padding: 1rem;
+        width: 100%;
+        max-width: 65rem;
+        max-height: 8rem;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: 0 2px 8px rgba(0, 0, 0);
+        border-radius: 6px;
+
     }
 }
