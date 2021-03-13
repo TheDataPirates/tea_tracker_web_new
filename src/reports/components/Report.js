@@ -12,7 +12,7 @@ import qs from "query-string";
 
 const useStyles = makeStyles({
     table: {
-        minWidth: 650,
+        minWidth: "95rem",
     },
 });
 

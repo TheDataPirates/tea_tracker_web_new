@@ -59,9 +59,9 @@ const Purchasing = () => {
                 value: '',
                 isValid: false
             },
-            type:{
-                value:'',
-                isValid:false
+            type: {
+                value: '',
+                isValid: false
             }
         },
         false
@@ -81,7 +81,6 @@ const Purchasing = () => {
                 console.log(responseData.suppliers);
 
 
-
             } catch (err) {
             }
         };
@@ -98,13 +97,13 @@ const Purchasing = () => {
             setLoadedSuppliers(prevSupplier =>
                 prevSupplier.filter(supp => supp.supplier_id == formState.inputs.id.value)
             );
-        }else if (formState.inputs.name.value !==''){
+        } else if (formState.inputs.name.value !== '') {
             setLoadedSuppliers(prevSupplier =>
                 prevSupplier.filter(supp => supp.name === formState.inputs.name.value)
             );
-        }else if (formState.inputs.type.value !==''){
+        } else if (formState.inputs.type.value !== '') {
             setLoadedSuppliers(prevSupplier =>
-                prevSupplier.filter(supp => supp.type === formState.inputs.type.value )
+                prevSupplier.filter(supp => supp.type === formState.inputs.type.value)
             );
         }
 
@@ -141,14 +140,11 @@ const Purchasing = () => {
         <div className={classes.background} style={{height: "65em"}}>
             <Grid container direction={"column"} spacing={3} alignItems={"center"}>
                 <ErrorModal error={error} onClear={clearError}/>
-                {isLoading && (
-                    <div className="center">
-                        <LoadingSpinner/>
-                    </div>
-                )}
 
-                <Typography align={'center'} variant={'h2'}>Purchasing</Typography>
                 <Grid item >
+                    <Typography align={'center'} variant={'h2'}>Purchasing</Typography>
+                </Grid>
+                <Grid item lg>
                     <form onSubmit={supplierSelectHandler} className={"supplier-profile-item__content"}>
 
                         <Input
@@ -157,7 +153,6 @@ const Purchasing = () => {
                             type="text"
                             label="Supplier ID :"
                             validators={[]}
-                            errorText="Please enter a valid ID."
                             onInput={inputHandler}
                         />
 
@@ -168,12 +163,12 @@ const Purchasing = () => {
                             type="text"
                             label="Supplier Name :"
                             validators={[]}
-                            errorText="Please enter a valid ID."
+
                             onInput={inputHandler}
                         />
                         <Input
                             id="type" element="dropdown" label="Supplier Type :" onInput={inputHandler}
-                            dropdownItems={["Grower Direct", "Grower through Agent","Dealer"]} validators={[]}
+                            dropdownItems={["Grower Direct", "Grower through Agent", "Dealer"]} validators={[]}
                         />
 
 
@@ -187,7 +182,12 @@ const Purchasing = () => {
 
                     </form>
                 </Grid>
-                <Grid item style={{marginLeft: "5rem", marginRight: "5rem",minWidth:"70rem"}}>
+                <Grid item style={{marginLeft: "3rem", marginRight: "3rem"}} lg>
+                    {isLoading && (
+                        <div className="center">
+                            <LoadingSpinner/>
+                        </div>
+                    )}
                     {!isLoading && loadedSuppliers && <Report items={loadedSuppliers}
                                                               header={['ID', 'Supplier Name', 'Type', 'Telephone', 'Address', 'Status']}/>}
                 </Grid>

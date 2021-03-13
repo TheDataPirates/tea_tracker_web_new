@@ -59,33 +59,37 @@ const SupplierDetails = () => {
                 );
 
                 // setLoadedSupplierData(responseData.supplier);
-                // console.log(responseData.supplier);
+                console.log(responseData.supplier);
                 // console.log(loadedSupplierData);
                 // console.log("called");
                 // console.log(mergeObject);
                 // console.log(responseData.supplier.length);
+                let dataSet = (responseData.supplier.length)/3;
                 let result = {};
-                for (let i = 0; i < responseData.supplier.length; i++) {
+                let merge=[];
+                for (let i = 0; i < dataSet; i++) {
+
                     result[responseData.supplier[i].grade_GL] = responseData.supplier[i].total_Gross_weight;
+
+                    console.log(result);
+                    let ordered = Object.keys(result).sort().reduce( //sorting gl grades ascending order(A,B.C)
+                        (obj, key) => {
+                            obj[key] = result[key];
+                            return obj;
+                        },
+                        {}
+                    );
+                    merge.push({
+                        supplier_id: parsed.supplier_id,
+                        name: parsed.name,
+                        type: parsed.type,
+                        ...ordered,
+                        date: responseData.date
+
+                    });
                 }
-                // console.log(result);
-                const ordered = Object.keys(result).sort().reduce( //sorting gl grades ascending order(A,B.C)
-                    (obj, key) => {
-                        obj[key] = result[key];
-                        return obj;
-                    },
-                    {}
-                );
-                console.log(ordered);
 
-                let merge = [{
-                    supplier_id:parsed.supplier_id,
-                    name:parsed.name,
-                    type:parsed.type,
-                    ...ordered,
-                    date:responseData.date
-
-                }];
+                // console.log(ordered);
                 console.log(merge);
 
 
@@ -118,13 +122,16 @@ const SupplierDetails = () => {
         <div className={classes.background} style={{height: "65em"}}>
             <Grid container direction={"column"} spacing={3}>
                 <ErrorModal error={error} onClear={clearError}/>
-                {isLoading && (
-                    <div className="center">
-                        <LoadingSpinner/>
-                    </div>
-                )}
-                <Typography align={'center'} variant={'h2'}>Purchasing</Typography>
+
+                <Grid item>
+                    <Typography align={'center'} variant={'h2'}>Purchasing</Typography>
+                </Grid>
                 <Grid item style={{marginLeft: "5rem", marginRight: "5rem"}}>
+                    {isLoading && (
+                        <div className="center">
+                            <LoadingSpinner/>
+                        </div>
+                    )}
                     {!isLoading && loadedSupplierData && <Report items={loadedSupplierData}
                                                                  header={['ID', 'Supplier Name', 'Type', 'GL A', 'GL B', 'GL C', 'Date']}/>}
                 </Grid>
