@@ -61,7 +61,7 @@ const Report = (props) => {
                         // let i = supplier_id;
                         // console.log(row[Object.keys(row)[3]]);
                         return (
-                            <TableRow key={row.name}
+                            <TableRow key={row.a}
                                       onClick={() => history.push({pathname: '/reports/purchasing/supplierlots', search:qs.stringify({
                                           ...queryParam,
                                           supplier_id: row.supplier_id,
